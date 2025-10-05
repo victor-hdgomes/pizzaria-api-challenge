@@ -29,9 +29,9 @@ export class AuthController {
     const token = await this.authService.signInOrCreate(validatedDto);
 
     res.cookie('authToken', token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      httpOnly: false,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
       maxAge: 1000 * 60 * 60 * 24,
     });
 
