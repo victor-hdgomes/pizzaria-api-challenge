@@ -12,9 +12,27 @@ enum Role {
   ASSISTANT
 }
 
+enum AuthProvider {
+  GOOGLE
+}
+
+model User {
+  id        String       @id @default(uuid())
+  googleId  String       @unique
+  email     String       @unique
+  name      String?
+  avatarUrl String?
+  provider  AuthProvider
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  messages  Message[]
+}
+
 model Message {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   role      Role
   content   String
   createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }
