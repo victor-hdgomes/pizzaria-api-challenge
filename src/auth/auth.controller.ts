@@ -54,4 +54,10 @@ export class AuthController {
     });
     return res.status(200).json({ message: 'Usuário deslogado com sucesso' });
   }
+
+  @Post('check')
+  @UseGuards(AuthTokenGuard)
+  checkAuth(@Res() res: Response) {
+    return res.status(202).json();
+  }
 }
